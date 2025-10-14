@@ -10,7 +10,7 @@ export const searchAnime = async (query) => {
 };
 
 export const getAnimeById = async (id) => {
-    const detailsResponse = await fetch(`${BASE_URL}/anime/${id}/full`) //get full details of an anime by its id
+    const detailsResponse = await fetch(`${BASE_URL}/anime/${id}/full`) //gets full details of an anime by its id
     if(!detailsResponse.ok) {
         throw new Error(`HTTP ${detailsResponse.status}: ${detailsResponse.statusText}`) //error handling the response the api gives
     }
@@ -18,12 +18,12 @@ export const getAnimeById = async (id) => {
     return detailsData; //returning the data
 }
 
-export const getAnimebygenre = async (genreID) => {
-    const genreResponse = await fetch(`${BASE_URL}/anime?genres=${genreID}&limit=10&order_by=score&sort=desc&limit=`) //get anime by genre id
+export const getAnimeByGenre = async (genreID) => {
+    const genreResponse = await fetch(`${BASE_URL}/anime?genres=${genreID}&limit=10&order_by=score&sort=desc`) //get anime by genre id
     if (!genreResponse.ok) {
         throw new Error(`HTTP ${genreResponse.status}: ${genreResponse.statusText}`) //error handling the response the api gives
     }
-    dataResponse = await genreResponse.json();
+    const dataResponse = await genreResponse.json();
     return dataResponse; //returning the data
 }
 export default BASE_URL;
