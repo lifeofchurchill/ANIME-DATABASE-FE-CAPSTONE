@@ -5,7 +5,12 @@ export default {
   "./src/**/*.{js,ts,jsx,tsx}",
 ],
 theme: {
-  extend: {},
+  extend: {
+    fontFamily: {
+      'myfont': ['MyFont', 'chubby bear'],
+      'sansita': ['sansita swashed']
+    }
+  },
 },
 plugins: [],
 

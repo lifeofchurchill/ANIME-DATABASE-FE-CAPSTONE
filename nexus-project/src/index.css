@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url(https://fonts.google.com/share?selection.family=Sansita+Swashed:wght@300..900|Source+Sans+3:ital,wght@0,200..900;1,200..900);
+
+@font-face {
+  font-family: 'Chubby Bear';
+  src: url('/src/components/font/chubby-bear.regular\ \(1\).ttf') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Chubby Bear';
+  src: url('/src/components/font/chubby-bear.regular\ \(1\).ttf') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
