@@ -30,6 +30,14 @@ const useAnimeStore = create((set) => ({
     setSearchLoading: (isLoading) => set({searchLoading: isLoading}),
 
     //actions for browse by genre
+    setGenreData: (genre, data) => set((state) => ({  //updtates one genre at a time
+        genreData : {
+            ...state.genreData, //keeps other genres unchanged
+            [genre]: data //updates the specific genre with new data
+        }
+    })),
+    setGenreLoading: (isLoading) => set({genreLoading: isLoading}),
+    setGenreError: (error) => set({genreError: error}),
 
 
     //actions for anime details
