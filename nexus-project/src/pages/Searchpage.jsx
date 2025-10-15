@@ -41,20 +41,28 @@ function Searchpage() {
         <div className=" min-h-screen bg-cover bg-no-repeat" style={{ backgroundImage: `url(${search})` }}>
             <Navigation />
 
-            <div className="container mt-4">
-                <form onSubmit={handleSearch} className="flex justify-center">
-                    <div>
-                        <input type="text" 
-                        placeholder="Search anime"
-                        value={query} 
-                        onChange={(e) => setQuery(e.target.value)} className="w-full max-w-md px-2 py-2 rounded-lg" />
-                    </div>
-                    <button type="submit" className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-lg">
-                        Search
-                    </button>
-                </form>
+            <div className="container mx-4 py-4 px-4"> //container for the search page
+               
+                ////div for the search form
+                <div className="flex justify-center"> 
+                    <input type="text" 
+                    placeholder="Search anime"
+                    value={query} 
+                    onChange={(e) => setQuery(e.target.value)} className="w-full max-w-md px-4 py-2 rounded-lg text-black" />
+                </div>
+                <button onClick={ handleSearch } className="px-4 py-2 bg-blue-500 text-white rounded-lg mt-4 hover:bg-blue-900">
+                    Search
+                </button>
             </div>
-            
+
+            {searchLoading && (
+                <div className="text-center text-white">Loading...</div>
+            )}
+
+            {searchError && (
+                <div className="text-center text-red-500">{searchError}</div>
+            )}
+
         </div>
     )
 
