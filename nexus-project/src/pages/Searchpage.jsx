@@ -63,6 +63,17 @@ function Searchpage() {
                 <div className="text-center text-red-500">{searchError}</div>
             )}
 
+            //if user searches and there are results display them since they are not loading and there are results
+            {!searchLoading && searchResults.length > 0 && (
+                <div className="grid gap-4">
+                    {searchResults.map((anime) => (   //map through the results and display each card
+                        <Link to={`/anime/${anime.mal_id}`} key={anime.mal_id}> //link to the detailed page of the the anime teh user selects
+                            <Animecard anime={anime} /> //for displaying each anime card
+                        </Link>
+                    ))}
+                </div>
+            )}
+
         </div>
     )
 
