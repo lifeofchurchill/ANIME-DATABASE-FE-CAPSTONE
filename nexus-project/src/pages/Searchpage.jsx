@@ -41,7 +41,7 @@ function Searchpage() {
         <div className=" min-h-screen bg-cover bg-no-repeat" style={{ backgroundImage: `url(${search})` }}>
             <Navigation />
 
-            <div className="container mx-4 py-4 px-4"> //container for the search page
+            <div className="container mx-4 py-4 px-4"> {/*container for the search page*/}
                
                 ////div for the search form
                 <div className="flex justify-center"> 
@@ -63,12 +63,11 @@ function Searchpage() {
                 <div className="text-center text-red-500">{searchError}</div>
             )}
 
-            //if user searches and there are results display them since they are not loading and there are results
-            {!searchLoading && searchResults.length > 0 && (
-                <div className="grid gap-4">
+            {!searchLoading && searchResults.length > 0 && ( //if user searches and there are results display them since they are not loading and there are results
+                <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-4">
                     {searchResults.map((anime) => (   //map through the results and display each card
-                        <Link to={`/anime/${anime.mal_id}`} key={anime.mal_id}> //link to the detailed page of the the anime teh user selects
-                            <Animecard anime={anime} /> //for displaying each anime card
+                        <Link to={`/anime/${anime.mal_id}`} key={anime.mal_id}> {/*link to the detailed page of the the anime teh user selects*/}
+                            <Animecard anime={anime} /> {/*for displaying each anime card*/}
                         </Link>
                     ))}
                 </div>
