@@ -1,7 +1,8 @@
 // Required React and third-party imports
 import { useEffect } from "react";
 import Navigation from "../components/Navigation";
-import { getAnimeById } from "../services/jikanApi";
+// NEW FEATURE: Import getAnimeEpisodes for fetching episode data
+import { getAnimeById, getAnimeEpisodes } from "../services/jikanApi";
 import useAnimeStore from "../store/store";
 import { useParams } from 'react-router-dom';
 
@@ -10,32 +11,46 @@ function Detailpage () {
     const { id } = useParams();
 
     // Get state and actions from our Zustand store
+    // Get state and actions from our Zustand store
     const {
-        selectedAnime, setSelectedAnime,   // selectedAnime: Current anime data   // setSelectedAnime: Function to update anime data
-        setSelectedAnimeLoading, setSelectedAnimeError // setSelectedAnimeLoading: Function to set loading state // setSelectedAnimeError: Function to set error state
+        selectedAnime, setSelectedAnime,
+        setSelectedAnimeLoading, setSelectedAnimeError,
+        // NEW FEATURE: Episodes state and actions
+        episodes, setEpisodes,
+        setEpisodesLoading, setEpisodesError
     } = useAnimeStore();
 
     // useEffect hook to fetch anime details when the component mounts or ID changes
     useEffect(() => {
-        const fetchAnimeDetails = async () => {
-
+        const fetchData = async () => {
             setSelectedAnimeLoading(true);
+            // NEW FEATURE: Set episodes loading state
+            setEpisodesLoading(true);
 
             try {
-                const response = await getAnimeById(id); // Fetch anime data from the Jikan API
+                // NEW FEATURE: Fetch both anime details and episodes in parallel for better performance
+                const [animeResponse, episodesResponse] = await Promise.all([
+                    getAnimeById(id),
+                    getAnimeEpisodes(id) // NEW FEATURE: Fetch episodes data
+                ]);
                 
-                setSelectedAnime(response.data); // Update the store with the fetched data
+                setSelectedAnime(animeResponse.data);
+                // NEW FEATURE: Store episodes data in state
+                setEpisodes(episodesResponse.data);
             }
             catch(error) {
-                
-                setSelectedAnimeError(error.message); // error handling
+                setSelectedAnimeError(error.message);
+                // NEW FEATURE: Handle episodes fetch errors
+                setEpisodesError(error.message);
             }
             finally {
-                setSelectedAnimeLoading(false); // loading state reset regardless
+                setSelectedAnimeLoading(false);
+                // NEW FEATURE: Reset episodes loading state
+                setEpisodesLoading(false);
             }
         }
-        fetchAnimeDetails();
-    }, [id]); // run again when id changes
+        fetchData();
+    }, [id]);
 
     return (
         <div className="min-h-screen">
@@ -70,10 +85,24 @@ function Detailpage () {
                                 {selectedAnime.status}
                             </p>
 
-                            <h2 className="font-semibold text-lg">Episodes</h2>
-                            <p>
-                                Total Episodes: {selectedAnime.episodes}
-                            </p>
+                            {/* NEW FEATURE: Episodes List Section */}
+                            <h2 className="font-semibold text-lg mb-2">Episodes</h2>
+                            <p className="mb-4">Total Episodes: {selectedAnime.episodes}</p>
+                            {/* NEW FEATURE: Scrollable episodes list with fixed height */}
+                            <div className="max-h-96 overflow-y-auto pr-4 space-y-2">
+                                {/* NEW FEATURE: Map through episodes and display each one */}
+                                {episodes?.map((episode) => (
+                                    <div key={episode.mal_id} className="bg-gray-800 p-3 rounded-lg">
+                                        <h3 className="font-medium">Episode {episode.episode}: {episode.title}</h3>
+                                        {/* NEW FEATURE: Show air date if available */}
+                                        {episode.aired && (
+                                            <p className="text-sm text-gray-400">
+                                                Aired: {new Date(episode.aired).toLocaleDateString()}
+                                            </p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 ) : (
