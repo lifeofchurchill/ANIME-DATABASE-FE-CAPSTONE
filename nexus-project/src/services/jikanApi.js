@@ -26,5 +26,17 @@ export const getAnimeByGenre = async (genreID) => {
     const dataResponse = await genreResponse.json();
     return dataResponse; //returning the data
 }
+
+// NEW FEATURE: Fetch anime episodes list
+export const getAnimeEpisodes = async (id) => {
+    // added this enpoint for a list of episodes of a particular anime after realizing jikan supports it
+    const episodesResponse = await fetch(`${BASE_URL}/anime/${id}/episodes`)
+    if (!episodesResponse.ok) {
+        throw new Error(`HTTP ${episodesResponse.status}: ${episodesResponse.statusText}`)
+    }
+    const episodesData = await episodesResponse.json();
+    return episodesData;
+}
+
 export default BASE_URL;
 
