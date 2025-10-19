@@ -41,37 +41,51 @@ function Searchpage() {
         <div className=" min-h-screen bg-cover bg-no-repeat" style={{ backgroundImage: `url(${search})` }}>
             <Navigation />
 
-            <div className="container mx-4 py-4 px-4"> {/*container for the search page*/}
-               
-                ////div for the search form
-                <div className="flex justify-center"> 
-                    <input type="text" 
-                    placeholder="Search anime"
-                    value={query} 
-                    onChange={(e) => setQuery(e.target.value)} className="w-full max-w-md px-4 py-2 rounded-lg text-black" />
-                </div>
-                <button onClick={ handleSearch } className="px-4 py-2 bg-blue-500 text-white rounded-lg mt-4 hover:bg-blue-900">
-                    Search
-                </button>
+            <div className="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <form onSubmit={handleSearch} className="max-w-3xl mx-auto">
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <input 
+                            type="text" 
+                            placeholder="Search anime"
+                            value={query} 
+                            onChange={(e) => setQuery(e.target.value)} 
+                            className="w-full sm:flex-1 px-4 py-3 rounded-lg text-black shadow-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        />
+                        <button 
+                            type="submit"
+                            className="w-full sm:w-auto px-6 py-3 bg-blue-500 text-white rounded-lg 
+                                     hover:bg-blue-900 transform hover:scale-105 transition-all duration-200 
+                                     shadow-lg hover:shadow-xl font-semibold"
+                        >
+                            Search
+                        </button>
+                    </div>
+                </form>
             </div>
 
-            {searchLoading && (
-                <div className="text-center text-white">Loading...</div>
-            )}
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                {searchLoading && (
+                    <div className="text-center text-white text-lg py-8">Loading...</div>
+                )}
 
-            {searchError && (
-                <div className="text-center text-red-500">{searchError}</div>
-            )}
+                {searchError && (
+                    <div className="text-center text-red-500 bg-red-100 p-4 rounded-lg my-4">{searchError}</div>
+                )}
 
-            {!searchLoading && searchResults.length > 0 && ( //if user searches and there are results display them since they are not loading and there are results
-                <div className="grid gap-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-4">
-                    {searchResults.map((anime) => (   //map through the results and display each card
-                        <Link to={`/anime/${anime.mal_id}`} key={anime.mal_id}> {/*link to the detailed page of the the anime teh user selects*/}
-                            <Animecard anime={anime} /> {/*for displaying each anime card*/}
-                        </Link>
-                    ))}
-                </div>
-            )}
+                {!searchLoading && searchResults.length > 0 && (
+                    <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 p-4">
+                        {searchResults.map((anime) => (
+                            <Link 
+                                to={`/anime/${anime.mal_id}`} 
+                                key={anime.mal_id}
+                                className="transform hover:scale-105 transition-all duration-200"
+                            >
+                                <Animecard anime={anime} />
+                            </Link>
+                        ))}
+                    </div>
+                )}
+            </div>
 
         </div>
     )
