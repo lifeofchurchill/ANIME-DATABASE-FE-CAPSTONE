@@ -22,6 +22,11 @@ const useAnimeStore = create((set) => ({
     selectedAnime: null,
     selectedAnimeLoading: false,
     selectedAnimeError: null,
+    
+    // NEW FEATURE: Episodes state
+    episodes: [], 
+    episodesLoading: false, 
+    episodesError: null, 
 
     //actions for search functionality
     setSearchQuery: (query) => set({searchQuery: query}),
@@ -43,7 +48,12 @@ const useAnimeStore = create((set) => ({
     //actions for anime details
     setSelectedAnime: (anime) => set({selectedAnime: anime}),
     setSelectedAnimeLoading: (isloading) => set({selectedAnimeLoading: isloading}),
-    setSelectedAnimeError: (error) => set({selectedAnimeError: error})
+    setSelectedAnimeError: (error) => set({selectedAnimeError: error}),
+    
+    // NEW FEATURE: Episodes actions
+    setEpisodes: (episodes) => set({episodes: episodes}),
+    setEpisodesLoading: (isLoading) => set({episodesLoading: isLoading}),
+    setEpisodesError: (error) => set({episodesError: error}) 
 }))
 
 
